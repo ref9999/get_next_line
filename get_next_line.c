@@ -64,3 +64,75 @@ char	*get_next_line(int fd)
 	return (buff);
 
 }
+##################################################################################
+
+
+
+
+
+######################################
+getnexlinr
+#################################3
+
+char *get_next_line(int fd)
+{	
+	static char *buffer;
+	char  *line;
+
+	// if (fd < 0 || read(fd, NULL, 0) < 0 || BUFFER_SIZE <= 0) 
+	// 	return (NULL);
+	// if (!buffer)
+	// 	buffer = ft_calloc(1, sizeof (char)); 
+	// if (!ft_strchr(buffer, '\n'))
+	// 	buffer = read_from_file(buffer, fd);
+ 	// if (!buffer)
+  	// 	return (free(buffer), NULL);
+
+ 	line = line_extraction(buffer);
+ 	buffer = joining(buffer);
+ 	return (line);
+}
+
+
+######################################
+reading from the file 
+########################################
+
+
+char *read_from_file(char *buffer, int fd)
+{
+ 	char *buffer2;
+ 	int  bytes_read;
+
+ 	buffer2 = ft_calloc((BUFFER_SIZE + 1), sizeof(char));
+ 	if (!buffer2)
+  		return (NULL);
+ 	bytes_read = 1;
+ 	while (bytes_read > 0)
+ 	{
+  		bytes_read = read(fd, buffer2, BUFFER_SIZE);
+  		if (bytes_read == -1)
+   			return (free(buffer2), NULL);
+  		buffer2[bytes_read] = '\0';
+  		buffer = append_buffer(buffer, buffer2);
+  		if (ft_strchr(buffer, '\n'))
+   			break ;
+ 	}
+ 	free (buffer2);
+ 	return (buffer);
+}
+
+
+######################################
+appending  // joinig the buffer
+######################################
+
+
+char *append_buffer(char *buffer, char *read_buffer)
+{
+ 	char *tmp;
+
+ 	tmp = ft_strjoin(buffer, read_buffer);
+ 	free(buffer);
+ 	return (temp);
+}
