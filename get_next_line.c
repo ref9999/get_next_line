@@ -1,105 +1,76 @@
-
-// char	*get_next_line(int fd)
-// {
-// 	int readit;
-// 	char *buff;
-
-// 	readit = read(fd, buff, 3);
-// 	buff = ft_calloc(3 + 1, sizeof(char));
-// 	if (!buff)
-// 		return (NULL);
-// 	return (buff);
-// }
-
-# include <unistd.h>
 #include "get_next_line.h"
 
-
-
-
-void    print_newline_helper(char *buffer)
+char *extract_lines(char *buffer, char *buffer2)
 {
+	char *new_buffer;
+	size_t i;
+	size_t j;
 
-	while (*buffer &&  *buffer != '\0')
+	if (!buffer)
 	{
-		if (*buffer == '\n')
-		{
-			*buffer= '\\';
-		}
-		// printf("%c",*buffer);
-		buffer++;
+		buffer = ft_calloc(1, sizeof(char));
+		if (!buffer)
+			return (NULL);
 	}
+	new_buffer = ft_calloc((ft_strlen(buffer) + ft_strlen(buffer2) + 1), sizeof(char));
+	if (!new_buffer)
+		return (NULL);
+	i = 0;
+	while (buffer[i])
+	{
+		new_buffer[i] = buffer[i];
+		i++;
+	}
+	j = 0;
+	while (buffer2[j])
+	{
+		new_buffer[i++] = buffer2[j];
+		if (buffer2[j++] == '\n')
+			break;
+	}
+	new_buffer[i] = '\0';
+	free(buffer);
+	return (new_buffer);
 }
 
-
-
-
-/*function to read from a file*/
-
-static char  *readlines(int fd)
+char *obtain_remaining(char *buffer)
 {
-	int			bread;
-	char		*buffer;
-	static int	count;
+	char *new_buffer;
+	char *newline_pos;
+	size_t i;
+	size_t j;
 
-	buffer = ft_calloc (BUFFERSIZE + 1, sizeof(char));
-	if (buffer == NULL)
-		return (NULL);
-	bread = read(fd, buffer, BUFFERSIZE);
-	if (bread <= 0)
+	newline_pos = ft_strchr(buffer, '\n');
+	if (!newline_pos)
 	{
 		free(buffer);
 		return (NULL);
 	}
-  return (buffer);
+	new_buffer = (char *)calloc((ft_strlen(newline_pos + 1) + 1), sizeof(char));
+	if (!new_buffer)
+		return (NULL);
+
+	i = 0;
+	j = newline_pos - buffer + 1;
+	while (buffer[j])
+	{
+		new_buffer[i++] = buffer[j++];
+	}
+	new_buffer[i] = '\0';
+	free(buffer);
+	return (new_buffer);
 }
 
-/*getnextline*/
-
-char	*get_next_line(int fd)
+char	*append_buffer(char *buffer, char *buffer2)
 {
-	char *buff;
+ 	char *tmp;
 
-	buff = readlines(fd);
-	return (buff);
-
-}
-##################################################################################
-
-
-
-
-
-######################################
-getnexlinr
-#################################3
-
-char *get_next_line(int fd)
-{	
-	static char *buffer;
-	char  *line;
-
-	// if (fd < 0 || read(fd, NULL, 0) < 0 || BUFFER_SIZE <= 0) 
-	// 	return (NULL);
-	// if (!buffer)
-	// 	buffer = ft_calloc(1, sizeof (char)); 
-	// if (!ft_strchr(buffer, '\n'))
-	// 	buffer = read_from_file(buffer, fd);
- 	// if (!buffer)
-  	// 	return (free(buffer), NULL);
-
- 	line = line_extraction(buffer);
- 	buffer = joining(buffer);
- 	return (line);
+ 	tmp = ft_strjoin(buffer, buffer2);
+ 	free(buffer);
+ 	return (tmp);
 }
 
-
-######################################
-reading from the file 
-########################################
-
-
-char *read_from_file(char *buffer, int fd)
+char	*read_from_file(char *buffer, int fd)
 {
  	char *buffer2;
  	int  bytes_read;
@@ -122,17 +93,22 @@ char *read_from_file(char *buffer, int fd)
  	return (buffer);
 }
 
-
-######################################
-appending  // joinig the buffer
-######################################
-
-
-char *append_buffer(char *buffer, char *read_buffer)
+char *get_next_line(int fd)
 {
- 	char *tmp;
+	static char *buffer;
+	char  *line;
 
- 	tmp = ft_strjoin(buffer, read_buffer);
- 	free(buffer);
- 	return (temp);
+	if (fd < 0 || read(fd, NULL, 0) < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
+	if (!buffer)
+		buffer = ft_calloc(1, sizeof (char));
+	if (!ft_strchr(buffer, '\n'))
+		buffer = read_from_file(buffer, fd);
+ 	if (!buffer)
+  		return (free(buffer), NULL);
+	if (!buffer)
+		return (NULL);
+ 	line = extract_lines(NULL, buffer);
+ 	buffer = obtain_remaining(buffer);
+ 	return (line);
 }
