@@ -6,29 +6,11 @@
 /*   By: riel-fas <riel-fas@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 12:30:39 by riel-fas          #+#    #+#             */
-/*   Updated: 2024/11/29 12:32:36 by riel-fas         ###   ########.fr       */
+/*   Updated: 2024/11/29 16:40:47 by riel-fas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-char	*ft_strchr(const char *s, int c)
-{
-	char	*temp;
-	char	cc;
-
-	temp = (char *)s;
-	cc = (char)c;
-	while (*temp)
-	{
-		if (*temp == cc)
-			return (temp);
-		temp++;
-	}
-	if (cc == '\0')
-		return (temp);
-	return (0);
-}
 
 char	*ft_freeline(char *stash)
 {
@@ -40,23 +22,31 @@ char	*ft_freeline(char *stash)
 		return (NULL);
 	while (stash[x] && stash[x] != '\n')
 		x++;
-	if (stash[x] == '\0')
+	if (!stash[x])
+	{
+		free (stash);
 		return (NULL);
+	}
 	line = ft_substr(stash, x + 1, ft_strlen(stash) - x - 1);
 	if (!line)
+	{
+		free(stash);
 		return (NULL);
-	stash[x + 1] = '\0';
+	}
+	free (stash);
 	return (line);
 }
 
 char	*read_from_file(int fd, char *stash, char *buffer)
 {
 	char	*tmp;
-	int		buffer_read;
+	int 	buffer_read;
 
-	buffer_read = read(fd, buffer, BUFFER_SIZE);
-	while (buffer_read > 0)
+	while (1)
 	{
+		buffer_read = read(fd, buffer, BUFFER_SIZE);
+		if (buffer_read == 0)
+			break;
 		buffer[buffer_read] = '\0';
 		if (!stash)
 			stash = ft_strdup("");
@@ -66,9 +56,10 @@ char	*read_from_file(int fd, char *stash, char *buffer)
 		if (!stash)
 			return (NULL);
 		if (ft_strchr(buffer, '\n'))
-			break ;
+			break;
+
 	}
-	if (buffer_read == -1)
+	if (buffer_read < 0)
 	{
 		free(stash);
 		return (NULL);
@@ -82,7 +73,7 @@ char	*get_next_line(int fd)
 	static char	*stash;
 	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 		return (NULL);
 	buffer = malloc(BUFFER_SIZE + 1);
 	if (!buffer)

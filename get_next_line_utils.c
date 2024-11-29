@@ -6,7 +6,7 @@
 /*   By: riel-fas <riel-fas@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 12:37:58 by riel-fas          #+#    #+#             */
-/*   Updated: 2024/11/29 12:43:18 by riel-fas         ###   ########.fr       */
+/*   Updated: 2024/11/29 17:03:28 by riel-fas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,27 +51,53 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (NULL);
 }
 
+// char	*ft_substr(char const *s, unsigned int start, size_t len)
+// {
+// 	size_t	i;
+// 	char	*str;
+
+// 	if (s)
+// 	{
+// 		str = (char *)malloc(sizeof(char) * (len + 1));
+// 		if (!str)
+// 			return (NULL);
+// 		i = 0;
+// 		while (i < len)
+// 		{
+// 			str[i] = s[start];
+// 			start++;
+// 			i++;
+// 		}
+// 		str[i] = '\0';
+// 		return (str);
+// 	}
+// 	return (NULL);
+// }
+
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	size_t	i;
-	char	*str;
+    size_t	i;
+    size_t	s_len;
+    char	*str;
 
-	if (s)
-	{
-		str = (char *)malloc(sizeof(char) * (len + 1));
-		if (str == NULL)
-			return (NULL);
-		i = 0;
-		while (i < len)
-		{
-			str[i] = s[start];
-			start++;
-			i++;
-		}
-		str[i] = '\0';
-		return (str);
-	}
-	return (NULL);
+    if (!s)
+        return (NULL);
+    s_len = ft_strlen(s);
+    if (start >= s_len)
+        return (ft_strdup(""));
+    if (len > s_len - start)
+        len = s_len - start;
+    str = (char *)malloc(sizeof(char) * (len + 1));
+    if (!str)
+        return (NULL);
+    i = 0;
+    while (i < len && s[start + i])
+    {
+        str[i] = s[start + i];
+        i++;
+    }
+    str[i] = '\0';
+    return (str);
 }
 
 char	*ft_strdup(const char *s1)
@@ -92,4 +118,22 @@ char	*ft_strdup(const char *s1)
 	}
 	res[i] = '\0';
 	return (res);
+}
+
+char	*ft_strchr(const char *s, int c)
+{
+	char	*temp;
+	char	cc;
+
+	temp = (char *)s;
+	cc = (char)c;
+	while (*temp)
+	{
+		if (*temp == cc)
+			return (temp);
+		temp++;
+	}
+	if (cc == '\0')
+		return (temp);
+	return (0);
 }
