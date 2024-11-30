@@ -10,12 +10,12 @@ int main(void)
 	char	*line2;
 
     int fd1 = open("test1.txt", O_RDONLY);
-    int fd2 = open("test2.txt", O_RDONLY);
-    if (fd1 == -1 || fd2 == -1)
-    {
-        perror("Error opening files");
-        return (1);
-    }
+    // int fd2 = open("test2.txt", O_RDONLY);
+    // if (fd1 == -1 || fd2 == -1)
+    // {
+    //     perror("Error opening files");
+    //     return (1);
+    // }
 
     printf("Reading from test1.txt:\n");
 	line1 = get_next_line_bonus(fd1);
@@ -24,13 +24,13 @@ int main(void)
         printf("%s", line1);
         free(line1);
     }
-    printf("\nReading from test2.txt:\n");
-	line2 = get_next_line_bonus(fd2);
-    while (line2 != NULL)
-    {
-        printf("%s", line2);
-        free(line2);
-    }
+    // printf("\nReading from test2.txt:\n");
+	// line2 = get_next_line_bonus(fd2);
+    // while (line2 != NULL)
+    // {
+    //     printf("%s", line2);
+    //     free(line2);
+    // }
 
     return (0);
 }
