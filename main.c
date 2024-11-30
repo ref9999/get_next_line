@@ -1,29 +1,18 @@
+#include <stdio.h>
+#include <fcntl.h>
 #include "get_next_line.h"
-#include <fcntl.h>
-#include <stdio.h>
-
-#include <stdio.h>
-#include <fcntl.h>
-
-int main(void)
+int main()
 {
-  int    fd;
-  char  *next_line;
-  int  count;
-
-  count = 0;
-  fd = open("test.txt", O_RDONLY);
-  while (1){
- 	 next_line = get_next_line(fd);
-  	if (next_line == NULL)
-		break;
-	count++;
-  	printf("[%d]:%s\n", count, next_line);
-	free(next_line);
-  	next_line = NULL;
-  	// system("leaks -q a.out");
-  }
-  close(fd);
-  return (0);
+	int fd = open("test.txt", O_RDWR | O_CREAT , 777);
+	char *line;
+	// write(fd, "123456789369852147", 19);
+	int fd2 = open("41_with_nl", O_RDWR);
+	line = get_next_line(fd2);
+	while (line)
+	{
+		printf("%s", line);
+		free (line);
+		line = get_next_line(fd2);
+	}
+	//system("leaks -q a.out");
 }
-

@@ -6,7 +6,7 @@
 /*   By: riel-fas <riel-fas@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 12:32:58 by riel-fas          #+#    #+#             */
-/*   Updated: 2024/11/29 12:37:35 by riel-fas         ###   ########.fr       */
+/*   Updated: 2024/11/30 13:19:19 by riel-fas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 10
+#  define BUFFER_SIZE 42
 # endif
 
 # include <unistd.h>
