@@ -6,11 +6,11 @@
 /*   By: riel-fas <riel-fas@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 13:40:53 by riel-fas          #+#    #+#             */
-/*   Updated: 2024/11/30 13:50:20 by riel-fas         ###   ########.fr       */
+/*   Updated: 2024/11/30 15:46:31 by riel-fas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_freeline(char *stash)
 {
@@ -77,22 +77,22 @@ char	*get_line_from_stash(char *stash)
 
 char	*get_next_line(int fd)
 {
-	static char	*stash[FOPEN_MAX];
+	static char	*stash[4096];
 	char		*buffer;
 	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || fd > 4095)
 		return (NULL);
 	buffer = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buffer)
 		return (NULL);
-	stash[] = read_from_file(fd, stash, buffer);
+	stash[fd] = read_from_file(fd, stash[fd], buffer);
 	free(buffer);
-	if (!stash)
+	if (!stash[fd])
 		return (NULL);
-	line = get_line_from_stash(stash[]);
+	line = get_line_from_stash(stash[fd]);
 	if (!line)
 		return (NULL);
-	stash[] = ft_freeline(stash);
+	stash[fd] = ft_freeline(stash[fd]);
 	return (line);
 }

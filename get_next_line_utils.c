@@ -6,11 +6,11 @@
 /*   By: riel-fas <riel-fas@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 12:37:58 by riel-fas          #+#    #+#             */
-/*   Updated: 2024/11/30 11:03:13 by riel-fas         ###   ########.fr       */
+/*   Updated: 2024/11/30 15:46:42 by riel-fas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 size_t	ft_strlen(const char *s)
 {

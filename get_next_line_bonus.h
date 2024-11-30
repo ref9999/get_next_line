@@ -6,21 +6,21 @@
 /*   By: riel-fas <riel-fas@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 13:41:17 by riel-fas          #+#    #+#             */
-/*   Updated: 2024/11/30 13:47:55 by riel-fas         ###   ########.fr       */
+/*   Updated: 2024/11/30 16:05:37 by riel-fas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#ifndef GET_NEXT_LINE_BONUS_H
+# define GET_NEXT_LINE_BONUS_H
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42
 # endif
 
 # include <stdlib.h>
-# include <stdio.h>
+# include <unistd.h>
 
-char	*get_next_line(int fd);
+char	*get_next_line_bonus(int fd);
 void	ft_bzero(void *s, size_t n);
 void	*ft_memset(void *b, int c, size_t len);
 size_t	ft_strlen(const char *s);
