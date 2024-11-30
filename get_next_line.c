@@ -6,7 +6,7 @@
 /*   By: riel-fas <riel-fas@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 12:30:39 by riel-fas          #+#    #+#             */
-/*   Updated: 2024/11/29 16:40:47 by riel-fas         ###   ########.fr       */
+/*   Updated: 2024/11/30 09:56:33 by riel-fas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,11 @@ char	*ft_freeline(char *stash)
 		return (NULL);
 	}
 	line = ft_substr(stash, x + 1, ft_strlen(stash) - x - 1);
+	free(stash);
 	if (!line)
 	{
-		free(stash);
 		return (NULL);
 	}
-	free (stash);
 	return (line);
 }
 
@@ -57,7 +56,6 @@ char	*read_from_file(int fd, char *stash, char *buffer)
 			return (NULL);
 		if (ft_strchr(buffer, '\n'))
 			break;
-
 	}
 	if (buffer_read < 0)
 	{
