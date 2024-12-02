@@ -6,12 +6,16 @@
 /*   By: riel-fas <riel-fas@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 13:40:53 by riel-fas          #+#    #+#             */
-/*   Updated: 2024/11/30 17:01:03 by riel-fas         ###   ########.fr       */
+/*   Updated: 2024/12/02 13:23:55 by riel-fas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
+
+// This function cleans up the stash
+// by freeing memory and returning the remaining
+// part of the string after the newline character.
 char	*ft_freeline(char *stash)
 {
 	char	*line;
@@ -32,6 +36,8 @@ char	*ft_freeline(char *stash)
 	return (line);
 }
 
+// This function reads from the file
+// and appends the content to stash.
 char	*read_from_file(int fd, char *stash, char *buffer)
 {
 	char	*tmp;
@@ -61,6 +67,8 @@ char	*read_from_file(int fd, char *stash, char *buffer)
 	return (stash);
 }
 
+
+// This function extracts a line from stash.
 char	*get_line_from_stash(char *stash)
 {
 	char	*line;
@@ -77,11 +85,13 @@ char	*get_line_from_stash(char *stash)
 
 char	*get_next_line(int fd)
 {
-	static char	*stash[4096];
+	#include <limits.h>
+
+	static char *stash[OPEN_MAX];
 	char		*buffer;
 	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || fd > 4095)
+	if (fd < 0 || BUFFER_SIZE <= 0 || fd > OPEN_MAX)
 		return (NULL);
 	buffer = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buffer)
@@ -96,3 +106,21 @@ char	*get_next_line(int fd)
 	stash[fd] = ft_freeline(stash[fd]);
 	return (line);
 }
+
+
+// get_next_line(fd)
+//     ├── validate inputs
+//     ├── allocate buffer
+//     ├── read_from_file(fd, stash[fd], buffer)
+//     │   ├── read data into buffer
+//     │   ├── append buffer to stash[fd]
+//     │   └── return updated stash[fd]
+//     ├── get_line_from_stash(stash[fd])
+//     │   ├── find newline in stash[fd]
+//     │   ├── extract line from stash[fd]
+//     │   └── return line
+//     ├── ft_freeline(stash[fd])
+//     │   ├── find newline in stash[fd]
+//     │   ├── free part before newline
+//     │   └── return remaining stash[fd]
+//     └── return line
